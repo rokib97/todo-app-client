@@ -36,7 +36,7 @@ const Navbar = () => {
         </div>
       </div>
       <div class="navbar-center">
-        <span class="text-3xl">Todo App</span>
+        <span class="text-3xl font-bold">Todo App</span>
       </div>
       <div class="navbar-end">
         <button class="btn btn-ghost btn-circle">
