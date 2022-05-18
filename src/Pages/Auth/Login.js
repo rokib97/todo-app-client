@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading";
@@ -11,15 +14,15 @@ const Login = () => {
   let from = location.state?.from?.pathname || "/";
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   useEffect(() => {
-    if (user) {
+    if (user || gUser) {
       toast.success("Successfully Logged In");
       navigate(from, { replace: true });
     }
-  }, [user, navigate, from]);
+  }, [user, navigate, from, gUser]);
 
-  if (loading) {
+  if (loading || gLoading) {
     return <Loading />;
   }
   const handleSignIn = (e) => {
@@ -62,11 +65,21 @@ const Login = () => {
                   </Link>
                 </p>
               </label>
-              <p>{error?.message}</p>
+              <p className="text-red-500">{error?.message}</p>
             </div>
-            <div class="form-control mt-6">
+            <div class="form-control mt-2">
               <button class="btn btn-success text-white">Login</button>
             </div>
+            <div class="divider">OR</div>
+            <div class="form-control mt-2">
+              <button
+                onClick={() => signInWithGoogle()}
+                class="btn btn-outline btn-success hover:text-white"
+              >
+                Login with Google
+              </button>
+            </div>
+            <p className="text-red-500">{gError?.message}</p>
           </div>
         </div>
       </div>

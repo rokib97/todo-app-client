@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {
   useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,15 +12,16 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-  console.log(user);
+
   const [updateProfile, updating, userError] = useUpdateProfile(auth);
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   useEffect(() => {
-    if (user) {
-      toast.success("Succesfully User Created And Updated Profile!");
+    if (user || gUser) {
+      toast.success("Succesfully User Created!");
       navigate("/");
     }
-  }, [user, navigate]);
-  if (loading || updating) {
+  }, [user, navigate, gUser]);
+  if (loading || updating || gLoading) {
     return <Loading />;
   }
 
@@ -32,7 +34,7 @@ const SignUp = () => {
     await updateProfile({ displayName: name });
   };
   return (
-    <form onSubmit={handleSignUp} class="hero mt-16 bg-base-100 ">
+    <form onSubmit={handleSignUp} class="hero mt-4 bg-base-100 ">
       <div class="hero-content flex-col lg:flex-row-reverse px-0">
         <div class="card flex-shrink-0 w-96 max-w-sm shadow-2xl bg-base-100">
           <div class="card-body">
@@ -76,11 +78,21 @@ const SignUp = () => {
                   </Link>
                 </p>
               </label>
-              <p className="text-error">{error?.message}</p>
-              <p className="text-error">{userError?.message}</p>
+              <p className="text-red-500">{error?.message}</p>
+              <p className="text-red-500">{userError?.message}</p>
             </div>
-            <div class="form-control mt-6">
+            <div class="form-control mt-2">
               <button class="btn btn-success text-white">Sign Up</button>
+            </div>
+            <div class="divider">OR</div>
+            <div class="form-control mt-2">
+              <button
+                onClick={() => signInWithGoogle()}
+                class="btn btn-outline btn-success hover:text-white"
+              >
+                Signup with Google
+              </button>
+              <p className="text-red-500">{gError?.message}</p>
             </div>
           </div>
         </div>
