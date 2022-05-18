@@ -32,8 +32,8 @@ const SignUp = () => {
     await updateProfile({ displayName: name });
   };
   return (
-    <form onSubmit={handleSignUp} class="hero mt-16 bg-base-100">
-      <div class="hero-content flex-col lg:flex-row-reverse">
+    <form onSubmit={handleSignUp} class="hero mt-16 bg-base-100 ">
+      <div class="hero-content flex-col lg:flex-row-reverse px-0">
         <div class="card flex-shrink-0 w-96 max-w-sm shadow-2xl bg-base-100">
           <div class="card-body">
             <div class="form-control">
@@ -80,7 +80,7 @@ const SignUp = () => {
               <p className="text-error">{userError?.message}</p>
             </div>
             <div class="form-control mt-6">
-              <button class="btn btn-primary">Sign Up</button>
+              <button class="btn btn-success text-white">Sign Up</button>
             </div>
           </div>
         </div>

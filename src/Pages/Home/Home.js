@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <>
       <InputForm handlePost={handlePost}></InputForm>
-      <div class="overflow-x-auto mt-8">
+      <div class="overflow-x-auto mt-8 lg:w-4/6 w-screen mx-auto">
         <table class="table table-compact w-full">
           <thead>
             <tr>

@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading";
 import auth from "../../firebase.init";
 
 const Login = () => {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
   useEffect(() => {
     if (user) {
       toast.success("Successfully Logged In");
-      navigate("/");
+      navigate(from, { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, navigate, from]);
+
   if (loading) {
     return <Loading />;
   }
@@ -27,7 +30,7 @@ const Login = () => {
   };
   return (
     <form onSubmit={handleSignIn} class="hero mt-16 bg-base-100">
-      <div class="hero-content flex-col lg:flex-row-reverse">
+      <div class="hero-content flex-col lg:flex-row-reverse px-0">
         <div class="card flex-shrink-0 w-96 max-w-sm shadow-2xl bg-base-100">
           <div class="card-body">
             <div class="form-control">
@@ -62,7 +65,7 @@ const Login = () => {
               <p>{error?.message}</p>
             </div>
             <div class="form-control mt-6">
-              <button class="btn btn-primary">Login</button>
+              <button class="btn btn-success text-white">Login</button>
             </div>
           </div>
         </div>

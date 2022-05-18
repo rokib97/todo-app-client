@@ -2,9 +2,8 @@ import React from "react";
 import { toast } from "react-toastify";
 
 const Task = ({ singleTask, isReload, setIsReload }) => {
-  const { _id, task, description, index } = singleTask || {};
+  const { _id, task, description, index, role } = singleTask || {};
 
-  const handleComplete = () => {};
   const handleDelete = (id) => {
     const url = `http://localhost:5000/task/${id}`;
     fetch(url, {
@@ -16,13 +15,28 @@ const Task = ({ singleTask, isReload, setIsReload }) => {
         setIsReload(!isReload);
       });
   };
+  const handleComplete = (id) => {
+    const url = `http://localhost:5000/task/${id}`;
+    fetch(url, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.error("Task Strikethrough Successfully!");
+        setIsReload(!isReload);
+      });
+  };
   return (
     <tr>
       <th>{index}</th>
-      <td>{task}</td>
-      <td>{description}</td>
+      <td className={role === "complete" && "line-through"}>{task}</td>
+      <td className={role === "complete" && "line-through"}>{description}</td>
       <td>
-        <button onClick={handleComplete} class="btn btn-success btn-xs">
+        <button
+          disabled={role === "complete"}
+          onClick={() => handleComplete(_id)}
+          class="btn btn-success btn-xs"
+        >
           Complete
         </button>
       </td>
