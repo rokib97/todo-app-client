@@ -4,33 +4,54 @@ import Task from "./Task";
 
 const Home = () => {
   const [tasks, setTasks] = useState([]);
+  const [isReload, setIsReload] = useState(false);
   useEffect(() => {
-    fetch("tasks.json")
+    fetch("http://localhost:5000/tasks")
       .then((res) => res.json())
       .then((data) => setTasks(data));
-  }, []);
+  }, [isReload]);
+
   const handlePost = (event) => {
     event.preventDefault();
-    const post = event.target.task.value;
+    const task = event.target.task.value;
     const description = event.target.description.value;
-    console.log(post, description);
+    const data = { task, description };
+    const url = `http://localhost:5000/task`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setIsReload(!isReload);
+        event.target.reset();
+      });
   };
   return (
     <>
       <InputForm handlePost={handlePost}></InputForm>
-      <div class="overflow-x-auto px-32 mt-8">
-        <table class="tabletable-compact w-full">
+      <div class="overflow-x-auto mt-8">
+        <table class="table table-compact w-full">
           <thead>
             <tr>
               <th></th>
               <th>Name</th>
               <th>Description</th>
               <th>Action</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task, index) => (
-              <Task key={task._id} task={task} index={index} />
+            {tasks.map((singleTask, index) => (
+              <Task
+                key={singleTask._id}
+                singleTask={singleTask}
+                index={index}
+              />
             ))}
           </tbody>
         </table>
