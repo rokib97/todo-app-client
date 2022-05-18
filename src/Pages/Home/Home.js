@@ -48,6 +48,8 @@ const Home = () => {
           <tbody>
             {tasks.map((singleTask, index) => (
               <Task
+                isReload={isReload}
+                setIsReload={setIsReload}
                 key={singleTask._id}
                 singleTask={singleTask}
                 index={index}
