@@ -1,12 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
+import auth from "../../firebase.init";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
+  if (user) {
+    navigate("/");
+  }
+  if (loading) {
+    return <Loading />;
+  }
   const handleSignIn = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    signInWithEmailAndPassword(email, password);
   };
   return (
     <form onSubmit={handleSignIn} class="hero mt-16 bg-base-100">
@@ -42,6 +56,7 @@ const Login = () => {
                   </Link>
                 </p>
               </label>
+              <p>{error?.message}</p>
             </div>
             <div class="form-control mt-6">
               <button class="btn btn-primary">Login</button>
