@@ -7,7 +7,7 @@ const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [isReload, setIsReload] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:5000/tasks")
+    fetch("https://frozen-ridge-04688.herokuapp.com/tasks")
       .then((res) => res.json())
       .then((data) => setTasks(data));
   }, [isReload]);
@@ -17,7 +17,7 @@ const Home = () => {
     const task = event.target.task.value;
     const description = event.target.description.value;
     const data = { task, description };
-    const url = `http://localhost:5000/task`;
+    const url = `https://frozen-ridge-04688.herokuapp.com/task`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -35,8 +35,8 @@ const Home = () => {
   return (
     <>
       <InputForm handlePost={handlePost}></InputForm>
-      <div class="overflow-x-auto mt-8 lg:w-4/6 w-screen mx-auto">
-        <table class="table table-compact w-full">
+      <div className="overflow-x-auto mt-8 lg:w-4/6 w-screen mx-auto">
+        <table className="table table-compact w-full">
           <thead>
             <tr>
               <th></th>

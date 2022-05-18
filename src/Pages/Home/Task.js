@@ -5,7 +5,7 @@ const Task = ({ singleTask, isReload, setIsReload }) => {
   const { _id, task, description, index, role } = singleTask || {};
 
   const handleDelete = (id) => {
-    const url = `http://localhost:5000/task/${id}`;
+    const url = `https://frozen-ridge-04688.herokuapp.com/task/${id}`;
     fetch(url, {
       method: "DELETE",
     })
@@ -16,13 +16,13 @@ const Task = ({ singleTask, isReload, setIsReload }) => {
       });
   };
   const handleComplete = (id) => {
-    const url = `http://localhost:5000/task/${id}`;
+    const url = `https://frozen-ridge-04688.herokuapp.com/task/${id}`;
     fetch(url, {
       method: "PUT",
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.error("Task Strikethrough Successfully!");
+        toast.success("Task Strikethrough Successfully!");
         setIsReload(!isReload);
       });
   };
@@ -35,13 +35,16 @@ const Task = ({ singleTask, isReload, setIsReload }) => {
         <button
           disabled={role === "complete"}
           onClick={() => handleComplete(_id)}
-          class="btn btn-success btn-xs"
+          className="btn btn-success btn-xs"
         >
           Complete
         </button>
       </td>
       <td>
-        <button onClick={() => handleDelete(_id)} class="btn btn-error btn-xs">
+        <button
+          onClick={() => handleDelete(_id)}
+          className="btn btn-error btn-xs"
+        >
           Delete
         </button>
       </td>

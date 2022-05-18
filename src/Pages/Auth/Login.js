@@ -32,49 +32,49 @@ const Login = () => {
     signInWithEmailAndPassword(email, password);
   };
   return (
-    <form onSubmit={handleSignIn} class="hero mt-16 bg-base-100">
-      <div class="hero-content flex-col lg:flex-row-reverse px-0">
-        <div class="card flex-shrink-0 w-96 max-w-sm shadow-2xl bg-base-100">
-          <div class="card-body">
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Email</span>
+    <form onSubmit={handleSignIn} className="hero mt-16 bg-base-100">
+      <div className="hero-content flex-col lg:flex-row-reverse px-0">
+        <div className="card flex-shrink-0 w-96 max-w-sm shadow-2xl bg-base-100">
+          <div className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
                 placeholder="email"
                 name="email"
-                class="input input-bordered"
+                className="input input-bordered"
               />
             </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Password</span>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
               </label>
               <input
                 type="text"
                 name="password"
                 placeholder="password"
-                class="input input-bordered"
+                className="input input-bordered"
               />
-              <label class="label">
+              <label className="label">
                 <p>
                   New to Todo App?{" "}
-                  <Link to="/signup" class="text-error">
+                  <Link to="/signup" className="text-error">
                     Signup
                   </Link>
                 </p>
               </label>
               <p className="text-red-500">{error?.message}</p>
             </div>
-            <div class="form-control mt-2">
-              <button class="btn btn-success text-white">Login</button>
+            <div className="form-control mt-2">
+              <button className="btn btn-success text-white">Login</button>
             </div>
-            <div class="divider">OR</div>
-            <div class="form-control mt-2">
+            <div className="divider">OR</div>
+            <div className="form-control mt-2">
               <button
                 onClick={() => signInWithGoogle()}
-                class="btn btn-outline btn-success hover:text-white"
+                className="btn btn-outline btn-success hover:text-white"
               >
                 Login with Google
               </button>
