@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loading from "../../components/Loading";
 import auth from "../../firebase.init";
 
@@ -9,9 +10,12 @@ const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
-  if (user) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (user) {
+      toast.success("Successfully Logged In");
+      navigate("/");
+    }
+  }, [user, navigate]);
   if (loading) {
     return <Loading />;
   }
@@ -19,7 +23,6 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
     signInWithEmailAndPassword(email, password);
   };
   return (

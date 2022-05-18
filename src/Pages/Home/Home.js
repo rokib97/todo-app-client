@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import InputForm from "./InputForm";
 import Task from "./Task";
 
@@ -26,7 +27,7 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        toast.success("Task Added Successfully!");
         setIsReload(!isReload);
         event.target.reset();
       });

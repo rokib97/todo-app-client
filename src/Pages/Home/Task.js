@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 
 const Task = ({ singleTask, isReload, setIsReload }) => {
   const { _id, task, description, index } = singleTask || {};
@@ -11,6 +12,7 @@ const Task = ({ singleTask, isReload, setIsReload }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        toast.error("Task Deleted Successfully!");
         setIsReload(!isReload);
       });
   };

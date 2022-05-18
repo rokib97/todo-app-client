@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loading from "../../components/Loading";
 import auth from "../../firebase.init";
 const SignUp = () => {
@@ -12,11 +13,14 @@ const SignUp = () => {
     useCreateUserWithEmailAndPassword(auth);
   console.log(user);
   const [updateProfile, updating, userError] = useUpdateProfile(auth);
+  useEffect(() => {
+    if (user) {
+      toast.success("Succesfully User Created And Updated Profile!");
+      navigate("/");
+    }
+  }, [user, navigate]);
   if (loading || updating) {
     return <Loading />;
-  }
-  if (user) {
-    navigate("/");
   }
 
   const handleSignUp = async (e) => {
